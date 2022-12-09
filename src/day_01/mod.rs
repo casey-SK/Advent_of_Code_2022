@@ -3,21 +3,10 @@ use itertools::Itertools;
 
 
 use std::fs::File;
-use std::path::Path;
 use std::io::{prelude::*, BufReader};
 
 
-pub fn solve(arg_path: &String) -> color_eyre::Result<()> {
-    color_eyre::install()?;
-
-
-    // Create a path to the desired file
-    let path = Path::new(&arg_path);
-    let display = path.display();
-
-    let file = File::open(path).wrap_err(format!("reading {:?}", display))?;
-
-    let reader = BufReader::new(file);
+pub fn solve(reader: BufReader<File>) -> color_eyre::Result<()> {
 
     let mut err = Ok(());
     let mut x = reader
