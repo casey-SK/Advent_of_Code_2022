@@ -5,6 +5,7 @@ use itertools::Itertools;
 use std::fs::File;
 use std::io::{prelude::*, BufReader};
 
+use crate::until_err;
 
 pub fn solve(reader: BufReader<File>) -> color_eyre::Result<()> {
 
@@ -36,13 +37,3 @@ pub fn solve(reader: BufReader<File>) -> color_eyre::Result<()> {
     Ok(())
 }
 
-/// Used in an iterator to prevent silent errors
-fn until_err<T, E>(err: &mut &mut Result<(), E>, item: Result<T, E>) -> Option<T> {
-    match item {
-        Ok(item) => Some(item),
-        Err(e) => {
-            **err = Err(e);
-            None
-        }
-    }
-}

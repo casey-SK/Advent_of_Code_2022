@@ -23,6 +23,7 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     Day1 { path: String },
+    Day2 { path: String },
 }
 
 fn main() -> color_eyre::Result<()> {
@@ -31,8 +32,10 @@ fn main() -> color_eyre::Result<()> {
 
     match &cli.command {
         Commands::Day1 { path } => {
-
             day_01::solve(get_input(path).unwrap())?;
+        }
+        Commands::Day2 { path } => {
+            day_02::solve(get_input(path).unwrap())?;
         }
     }
     Ok(())
@@ -47,4 +50,15 @@ fn get_input(arg_path: &String) -> color_eyre::Result<BufReader<File>> {
     let reader = BufReader::new(file);
 
     Ok(reader)
+}
+
+/// Used in an iterator to prevent silent errors
+pub fn until_err<T, E>(err: &mut &mut Result<(), E>, item: Result<T, E>) -> Option<T> {
+    match item {
+        Ok(item) => Some(item),
+        Err(e) => {
+            **err = Err(e);
+            None
+        }
+    }
 }
