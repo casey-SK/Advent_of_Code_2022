@@ -2,6 +2,7 @@
 
 mod day_01;
 mod day_02;
+mod day_03;
 
 use std::fs::File;
 use std::path::Path;
@@ -24,6 +25,7 @@ struct Cli {
 enum Commands {
     Day1 { path: String },
     Day2 { path: String },
+    Day3 { path: String },
 }
 
 fn main() -> color_eyre::Result<()> {
@@ -36,6 +38,9 @@ fn main() -> color_eyre::Result<()> {
         }
         Commands::Day2 { path } => {
             day_02::solve(get_input(path).unwrap())?;
+        }
+        Commands::Day3 { path } => {
+            day_03::solve(get_input(path).unwrap())?;
         }
     }
     Ok(())

@@ -1,0 +1,7 @@
+let (x, _) = s
+        .chars()
+        .counts()
+        .into_iter()
+        .filter(|&x| x.1 == 2)
+        .exactly_one()
+        .unwrap();
