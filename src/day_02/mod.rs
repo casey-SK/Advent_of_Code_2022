@@ -27,7 +27,7 @@ pub fn solve(reader: BufReader<File>) -> color_eyre::Result<()> {
         .map(|line| {get_score(line.split_whitespace().collect())})
         .sum::<u32>();
     
-    println!("Score: {:?}", score);
+    println!("Score: {score:?}");
 
     Ok(())
 }

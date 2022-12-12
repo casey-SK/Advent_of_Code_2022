@@ -1,9 +1,7 @@
 use itertools::Itertools;
 use std::fs::File;
-use std::iter::Skip;
 use std::str;
 use std::io::{prelude::*, BufReader};
-use itertools::Chunk;
 
 use crate::until_err;
 
@@ -24,12 +22,12 @@ pub fn solve(reader: BufReader<File>) -> color_eyre::Result<()> {
         // determine if the outlier is uppercase or lowercase
         // if uppercase, convert to u8 and subtract __ to get it's priority
         // if lowercase, convert to u8 and subtract __ to get it's priority
-        .map(|item| get_priority(item))
+        .map(get_priority)
         // sum up all priorities of each line
         .fold((0, 0), |(a1,a2), (x1, x2)| (a1+x1, a2+x2));
     err?;
-    println!("Item Priority: {:?}", item_priority);
-    println!("Badge Priority: {:?}", badge_priority);
+    println!("Item Priority: {item_priority:?}");
+    println!("Badge Priority: {badge_priority:?}");
 
     Ok(())
 }
@@ -51,13 +49,13 @@ fn find_duplicates(s: &[String; 3]) -> (char, char, char, char) {
                 .skip(1))
             .collect();
         
-        let item_y = item_x[0].0.unwrap().chars().find(|c| item_x[0].1.unwrap().chars().contains(c) == true);
+        let item_y = item_x[0].0.unwrap().chars().find(|c| item_x[0].1.unwrap().chars().contains(c));
     
         item_chars.push(item_y.unwrap());
 
 
     }
-    let badge_dup = s[0].chars().find(|c| (s[1].chars().contains(c) == true) && (s[2].chars().contains(c) == true));
+    let badge_dup = s[0].chars().find(|c| (s[1].chars().contains(c)) && (s[2].chars().contains(c)));
     //let badge_x: Vec<_> = s
             
     //println!("({:?}, {:?}, {:?})", item_chars[0], item_chars[1], item_chars[2]);
@@ -84,7 +82,7 @@ fn get_priority((i1, i2, i3, b): (char, char, char, char)) -> (u32, u32) {
         }
     }
 
-    let mut b_sum;
+    let b_sum: u32;
     //println!("{:?}",b);
     if b.is_ascii_uppercase() {
         //println!("{:?}", ((b as u8) as u32) - 37);

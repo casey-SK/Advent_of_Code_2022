@@ -50,7 +50,7 @@ fn get_input(arg_path: &String) -> color_eyre::Result<BufReader<File>> {
     let path = Path::new(&arg_path);
     let display = path.display();
 
-    let file = File::open(path).wrap_err(format!("reading {:?}", display))?;
+    let file = File::open(path).wrap_err(format!("reading {display:?}"))?;
 
     let reader = BufReader::new(file);
 

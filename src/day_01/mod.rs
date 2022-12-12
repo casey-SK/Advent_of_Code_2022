@@ -19,7 +19,7 @@ pub fn solve(reader: BufReader<File>) -> color_eyre::Result<()> {
             if filt {
                 Some(group
                     .into_iter()
-                    .map(|x| x.parse::<u32>().wrap_err(format!("{:?}", x)).unwrap())
+                    .map(|x| x.parse::<u32>().wrap_err(format!("{x:?}")).unwrap())
                     .sum::<u32>())
             } else { None })
         .into_iter()
